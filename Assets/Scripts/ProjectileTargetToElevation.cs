@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ProjectileTargetToElevation : MonoBehaviour {
-    const float Gravity = 9.8f;
     const float VelocityMin = 5f;
     const float VelocityMax = 25f;
 
@@ -46,7 +45,7 @@ public class ProjectileTargetToElevation : MonoBehaviour {
         {
             if(CalculateElevation())
             {
-                ProjectileUtil.MakeTrajectoryToTarget(_trajectoryRenderer, _elevation, _initialVelocity, transform.position, _target.position, Gravity);
+                ProjectileUtil.MakeTrajectoryToTarget(_trajectoryRenderer, _elevation, _initialVelocity, transform.position, _target.position, Physics.gravity.y);
             }
             else
             {
@@ -57,7 +56,7 @@ public class ProjectileTargetToElevation : MonoBehaviour {
 
     private bool CalculateElevation()
     {
-        float a = (-0.5f * Gravity * _target.transform.position.x * _target.transform.position.x) / (_initialVelocity * _initialVelocity);
+        float a = (0.5f * Physics.gravity.y * _target.transform.position.x * _target.transform.position.x) / (_initialVelocity * _initialVelocity);
         float b = _target.transform.position.x;
         float c = a - _target.transform.position.y + transform.position.y;
 
@@ -74,26 +73,6 @@ public class ProjectileTargetToElevation : MonoBehaviour {
         }
 
         return false;
-    }
-
-    public void DrawTrajectory()
-    {
-        float verticalInitialSpeed = Mathf.Sin(Mathf.Deg2Rad * _elevation) * _initialVelocity;
-        float horizontalInitialSpeed = Mathf.Cos(Mathf.Deg2Rad * _elevation) * _initialVelocity;
-
-        Vector3 InitialPosition = Vector3.zero;
-        const int PositionCount = 30;
-        Vector3[] positions = new Vector3[PositionCount];
-        for(int i = 0; i < PositionCount; ++i)
-        {
-            float t = i * 0.1f;
-            float positionX = horizontalInitialSpeed * t;
-            float positionY = (verticalInitialSpeed * t) - (0.5f * Gravity * t * t) + transform.position.y;
-            positions[i] = InitialPosition +
-                new Vector3(positionX, positionY, 0f);
-        }
-        _trajectoryRenderer.SetPositions(positions);
-        _trajectoryRenderer.positionCount = PositionCount;
     }
 
     public void Throw()

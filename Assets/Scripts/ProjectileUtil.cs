@@ -16,7 +16,7 @@ public class ProjectileUtil
         {
             float t = i * 0.1f;
             float positionX = horizontalInitialSpeed * t;
-            float positionY = (verticalInitialSpeed * t) - (0.5f * gravity * t * t) + initialPosition.y;
+            float positionY = (verticalInitialSpeed * t) + (0.5f * gravity * t * t) + initialPosition.y;
             positions[i] = InitialPosition +
                 new Vector3(positionX, positionY, 0f);
         }
@@ -35,7 +35,7 @@ public class ProjectileUtil
         {
             float positionX = i * intervalX;
             float positionY = positionX * Mathf.Tan(radian)
-                + ((-0.5f * gravity * positionX * positionX) / (initialVelocity * initialVelocity * Mathf.Cos(radian) * Mathf.Cos(radian))) + initialPosition.y;
+                + ((0.5f * gravity * positionX * positionX) / (initialVelocity * initialVelocity * Mathf.Cos(radian) * Mathf.Cos(radian))) + initialPosition.y;
             positions[i] = InitialPosition +
                 new Vector3(positionX, positionY, 0f);
         }

@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Projectile : MonoBehaviour {
-    const float Gravity = 9.8f;
     const float AngleMin = 0f;
     const float AngleMax = 90f;
     const float VelocityMin = 5f;
@@ -45,7 +44,7 @@ public class Projectile : MonoBehaviour {
         {
             _velocityDisplay.text = string.Format("Velocity: {0:f1}", _initialVelocity);
             _elevationDisplay.text = string.Format("Angle: {0:f1}", _elevation);
-            ProjectileUtil.MakeTrajectory(_trajectoryRenderer, _elevation, _initialVelocity, transform.position, Gravity);
+            ProjectileUtil.MakeTrajectory(_trajectoryRenderer, _elevation, _initialVelocity, transform.position, Physics.gravity.y);
         }
     }
 
