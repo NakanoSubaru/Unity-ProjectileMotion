@@ -44,7 +44,9 @@ public class Projectile : MonoBehaviour {
         {
             _velocityDisplay.text = string.Format("Velocity: {0:f1}", _initialVelocity);
             _elevationDisplay.text = string.Format("Angle: {0:f1}", _elevation);
-            ProjectileUtil.MakeTrajectory(_trajectoryRenderer, _elevation, _initialVelocity, transform.position, Physics.gravity.y);
+            var positions = ProjectileUtil.MakeTrajectory(_elevation, _initialVelocity, Physics.gravity.y);
+            _trajectoryRenderer.positionCount = positions.Length;
+            _trajectoryRenderer.SetPositions(positions);
         }
     }
 

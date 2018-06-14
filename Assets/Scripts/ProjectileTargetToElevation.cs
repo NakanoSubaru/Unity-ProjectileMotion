@@ -45,7 +45,9 @@ public class ProjectileTargetToElevation : MonoBehaviour {
         {
             if(CalculateElevation())
             {
-                ProjectileUtil.MakeTrajectoryToTarget(_trajectoryRenderer, _elevation, _initialVelocity, transform.position, _target.position, Physics.gravity.y);
+                var positions = ProjectileUtil.MakeTrajectoryToTarget(_elevation, _initialVelocity, _target.position, Physics.gravity.y);
+                _trajectoryRenderer.positionCount = positions.Length;
+                _trajectoryRenderer.SetPositions(positions);
             }
             else
             {
