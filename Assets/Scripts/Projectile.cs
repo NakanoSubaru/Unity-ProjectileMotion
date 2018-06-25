@@ -57,6 +57,7 @@ public class Projectile : MonoBehaviour {
         var rigid = GetComponent<Rigidbody>();
         rigid.velocity = new Vector3(horizontalInitialSpeed, verticalInitialSpeed, 0f);
         rigid.useGravity = true;
+        rigid.drag = 0f;
         _flying = true;
     }
 

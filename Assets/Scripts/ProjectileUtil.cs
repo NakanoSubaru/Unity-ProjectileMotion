@@ -6,14 +6,16 @@ public class ProjectileUtil
 {
     public static Vector3[] MakeTrajectory(float elevation, float initialVelocity, float gravity)
     {
-        float verticalInitialSpeed = Mathf.Sin(Mathf.Deg2Rad * elevation) * initialVelocity;
-        float horizontalInitialSpeed = Mathf.Cos(Mathf.Deg2Rad * elevation) * initialVelocity;
-        
+        const int MaxTime = 4;
         const int PositionCount = 40;
+        const float TimeResolution = (float)MaxTime / PositionCount;
         Vector3[] positions = new Vector3[PositionCount];
+
+        float horizontalInitialSpeed = Mathf.Cos(Mathf.Deg2Rad * elevation) * initialVelocity;
+        float verticalInitialSpeed = Mathf.Sin(Mathf.Deg2Rad * elevation) * initialVelocity;
         for(int i = 0; i < PositionCount; ++i)
         {
-            float t = i * 0.1f;
+            float t = i * TimeResolution;
             float positionX = horizontalInitialSpeed * t;
             float positionY = (verticalInitialSpeed * t) + (0.5f * gravity * t * t);
             positions[i] = new Vector3(positionX, positionY, 0f);
