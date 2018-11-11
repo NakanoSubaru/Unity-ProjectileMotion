@@ -43,7 +43,7 @@ public class ProjectileTargetToElevation : MonoBehaviour {
 
         if(!_flying)
         {
-            if(CalculateElevation())
+            if(ProjectileUtil.CalculateElevation(ref _elevation, _initialVelocity, _target))
             {
                 var positions = ProjectileUtil.MakeTrajectoryToTarget(_elevation, _initialVelocity, _target.position, Physics.gravity.y);
                 _trajectoryRenderer.positionCount = positions.Length;
@@ -54,27 +54,6 @@ public class ProjectileTargetToElevation : MonoBehaviour {
                 _trajectoryRenderer.positionCount = 0;
             }
         }
-    }
-
-    private bool CalculateElevation()
-    {
-        float a = (0.5f * Physics.gravity.y * _target.transform.position.x * _target.transform.position.x) / (_initialVelocity * _initialVelocity);
-        float b = _target.transform.position.x;
-        float c = a - _target.transform.position.y + transform.position.y;
-
-        float discriminant = b * b - 4 * a * c;
-        if(discriminant > 0)
-        {
-            _elevation = Mathf.Atan((-b - Mathf.Sqrt(discriminant)) / (2f * a)) * Mathf.Rad2Deg;
-            return true;
-        }
-        else if(discriminant == 0)
-        {
-            _elevation = Mathf.Atan(-b / (2f * a)) * Mathf.Rad2Deg;
-            return true;
-        }
-
-        return false;
     }
 
     public void Throw()
